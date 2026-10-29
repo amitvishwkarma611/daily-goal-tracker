@@ -1,0 +1,89 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User profile information",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "email": { "type": "string", "maxLength": 256 },
+        "displayName": { "type": "string", "maxLength": 128 },
+        "photoURL": { "type": "string", "maxLength": 512 },
+        "createdAt": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["id", "email", "createdAt"]
+    },
+    "Goal": {
+      "title": "Goal",
+      "description": "Strategic daily or long-term goal",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "title": { "type": "string", "maxLength": 256 },
+        "description": { "type": "string", "maxLength": 1024 },
+        "category": { "type": "string", "enum": ["Career", "Health", "Learning", "Personal", "Focus"] },
+        "targetDate": { "type": "string", "maxLength": 32 },
+        "color": { "type": "string", "maxLength": 32 },
+        "createdAt": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["id", "userId", "title", "category", "targetDate", "createdAt"]
+    },
+    "Task": {
+      "title": "Task",
+      "description": "Daily task with priority and scheduling",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "goalId": { "type": "string", "maxLength": 128 },
+        "title": { "type": "string", "maxLength": 256 },
+        "notes": { "type": "string", "maxLength": 2048 },
+        "priority": { "type": "string", "enum": ["high", "medium", "low"] },
+        "timeSlot": { "type": "string", "enum": ["morning", "afternoon", "evening", "anytime"] },
+        "estimatedMinutes": { "type": "number" },
+        "date": { "type": "string", "maxLength": 32 },
+        "completed": { "type": "boolean" },
+        "completedAt": { "type": "string", "maxLength": 64 },
+        "createdAt": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["id", "userId", "title", "priority", "timeSlot", "estimatedMinutes", "date", "completed", "createdAt"]
+    },
+    "ProductivityRecord": {
+      "title": "ProductivityRecord",
+      "description": "Daily reflection, wins, and focus rating",
+      "type": "object",
+      "properties": {
+        "date": { "type": "string", "maxLength": 32 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "focusRating": { "type": "number" },
+        "notes": { "type": "string", "maxLength": 2048 },
+        "wins": {
+          "type": "array",
+          "items": { "type": "string", "maxLength": 256 }
+        },
+        "obstacles": { "type": "string", "maxLength": 1024 },
+        "updatedAt": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["date", "userId", "focusRating", "updatedAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "User profile document"
+    },
+    "/users/{userId}/goals/{goalId}": {
+      "schema": "Goal",
+      "description": "User goals subcollection"
+    },
+    "/users/{userId}/tasks/{taskId}": {
+      "schema": "Task",
+      "description": "User tasks subcollection"
+    },
+    "/users/{userId}/records/{dateId}": {
+      "schema": "ProductivityRecord",
+      "description": "User daily productivity records subcollection"
+    }
+  }
+}

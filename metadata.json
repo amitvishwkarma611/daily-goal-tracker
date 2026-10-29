@@ -1,0 +1,6 @@
+{
+  "name": "Daily Goal Tracker",
+  "description": "Set daily goals, prioritize tasks, track completion with dynamic progress bars, and analyze daily, weekly, and monthly productivity.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
